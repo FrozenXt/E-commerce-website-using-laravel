@@ -143,17 +143,25 @@
                     </p>
 
                     <!-- Price Section -->
-                    <div class="price-section">
-                        <div class="price-info">
-                            <span class="price-current">${{ number_format($product->final_price, 2) }}</span>
-                            @if($product->discount_price)
-                                <span class="price-original">${{ number_format($product->price, 2) }}</span>
-                                <span class="price-discount">
-                                    {{ round((($product->price - $product->final_price) / $product->price) * 100) }}% OFF
-                                </span>
-                            @endif
-                        </div>
-                    </div>
+<div class="price-section">
+    <div class="price-info">
+        @if($product->discount_price && $product->discount_price < $product->price)
+            <span class="price-current text-success fw-bold">
+                Rs {{ number_format($product->discount_price, 2) }}
+            </span>
+            <span class="price-original text-muted text-decoration-line-through">
+                Rs {{ number_format($product->price, 2) }}
+            </span>
+            <span class="price-discount text-danger fw-semibold">
+                {{ round((($product->price - $product->discount_price) / $product->price) * 100) }}% OFF
+            </span>
+        @else
+            <span class="price-current fw-bold">
+                Rs {{ number_format($product->price, 2) }}
+            </span>
+        @endif
+    </div>
+</div>
 
                     <!-- Stock Info -->
                     <div class="stock-info">

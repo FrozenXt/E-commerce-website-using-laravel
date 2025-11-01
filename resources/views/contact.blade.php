@@ -259,10 +259,15 @@
 
 <!-- Map Section -->
 <section class="map-container">
-    <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.6859876141363!2d85.34976041506053!3d27.72844488279722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb196889de3b0f%3A0x476cc295e1706f02!2sJorpati%2C%20Kathmandu%2C%20Nepal!5e0!3m2!1sen!2sus!4v1706272725462!5m2!1sen!2sus" 
-        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+     <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.00000!2d85.374816!3d27.7219349!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1a6b3b41b3cf%3A0x8b1d063f3e2efb60!2sSmart%20Techno%20Hub!5e0!3m2!1sen!2snp!4v1698573300000!5m2!1sen!2snp"
+    width="100%"
+    height="400"
+    style="border:0;"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
 </section>
 
 @endsection

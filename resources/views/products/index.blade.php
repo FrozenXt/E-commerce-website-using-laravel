@@ -423,9 +423,9 @@
                         <div class="product-category">{{ $product->category->name }}</div>
                         <h3>{{ $product->name }}</h3>
                         <div class="product-price">
-                            <span class="price-current">${{ number_format($product->final_price, 2) }}</span>
+                            <span class="price-current">Rs {{ number_format($product->final_price, 2) }}</span>
                             @if($product->discount_price)
-                            <span class="price-old">${{ number_format($product->price, 2) }}</span>
+                            <span class="price-old">Rs {{ number_format($product->price, 2) }}</span>
                             @endif
                         </div>
                         <a href="{{ route('products.show', $product->slug) }}" class="btn-view">View Details</a>

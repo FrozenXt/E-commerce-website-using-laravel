@@ -1,229 +1,157 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('title', 'Add New Service')
 
 @section('content')
 
 <div class="form-container">
-    <!-- Background Decoration -->
     <div class="bg-decoration"></div>
 
-    <div class="form-wrapper">
-        <!-- Header -->
-        <div class="form-header">
-            <div class="header-content">
-                <div class="header-icon">
-                    <i class="fas fa-tools"></i>
+```
+<div class="form-wrapper">
+    <!-- Header -->
+    <div class="form-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div>
+                <h1 class="form-title">Add New Service</h1>
+                <p class="form-subtitle">Create a new service for your customers</p>
+            </div>
+        </div>
+        <a href="{{ route('admin.services.index') }}" class="btn-back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <!-- Validation Errors -->
+    @if ($errors->any())
+        <div class="alert-container">
+            <div class="alert alert-error">
+                <div class="alert-icon">
+                    <i class="fas fa-exclamation-circle"></i>
                 </div>
-                <div>
-                    <h1 class="form-title">Add New Service</h1>
-                    <p class="form-subtitle">Create a new service for your customers</p>
+                <div class="alert-content">
+                    <h4 class="alert-title">Validation Error</h4>
+                    <ul class="alert-list">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
-            <a href="{{ route('admin.services.index') }}" class="btn-back">
-                <i class="fas fa-arrow-left"></i>
-            </a>
+        </div>
+    @endif
+
+    <!-- Form -->
+    <form action="{{ route('admin.services.store') }}" method="POST" class="service-form">
+        @csrf
+
+        <!-- Basic Info -->
+        <div class="form-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> Basic Information</h2>
+                <p class="section-subtitle">Enter the basic details of your service</p>
+            </div>
+
+            <div class="form-grid">
+                <!-- Name -->
+                <div class="form-group full-width">
+                    <label for="name" class="form-label">Service Name <span class="required">*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-heading"></i>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Enter service name" value="{{ old('name') }}" required>
+                    </div>
+                </div>
+
+                <!-- Slug -->
+                <div class="form-group full-width">
+                    <label for="slug" class="form-label">Slug <span class="optional">(Optional)</span></label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-link"></i>
+                        <input type="text" name="slug" id="slug" class="form-control" placeholder="Auto-generated if empty" value="{{ old('slug') }}">
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group full-width">
+                    <label for="description" class="form-label">Description <span class="required">*</span></label>
+                    <textarea name="description" id="description" class="form-control textarea-control" rows="4" placeholder="Enter service description..." required>{{ old('description') }}</textarea>
+                </div>
+
+                <!-- Price & Duration -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price" class="form-label">Price (₹) <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" name="price" id="price" step="0.01" class="form-control" placeholder="0.00" value="{{ old('price') }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="duration" class="form-label">Duration (minutes) <span class="required">*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-clock"></i>
+                            <input type="number" name="duration" id="duration" class="form-control" placeholder="e.g. 45" value="{{ old('duration') }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Error Messages -->
-        @if ($errors->any())
-            <div class="alert-container">
-                <div class="alert alert-error">
-                    <div class="alert-icon">
-                        <i class="fas fa-exclamation-circle"></i>
+        <!-- Settings -->
+        <div class="form-section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-cog"></i> Settings</h2>
+                <p class="section-subtitle">Configure service availability</p>
+            </div>
+            <div class="form-grid">
+                <div class="toggle-group">
+                    <div class="toggle-content">
+                        <label class="toggle-label">Active Service</label>
+                        <p class="toggle-description">Enable this service to make it visible to users</p>
                     </div>
-                    <div class="alert-content">
-                        <h4 class="alert-title">Validation Error</h4>
-                        <p class="alert-message">Please fix the following issues:</p>
-                        <ul class="alert-list">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" name="is_active" checked>
+                        <span class="slider"></span>
+                    </label>
                 </div>
             </div>
-        @endif
+        </div>
 
-        <!-- Form -->
-        <form action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data" class="service-form">
-            @csrf
-
-            <!-- Basic Information Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-info-circle"></i> Basic Information
-                    </h2>
-                    <p class="section-subtitle">Enter the basic details of your service</p>
-                </div>
-
-                <div class="form-grid">
-                    <!-- Service Name -->
-                    <div class="form-group full-width">
-                        <label for="name" class="form-label">
-                            Service Name
-                            <span class="required">*</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-heading"></i>
-                            <input type="text" name="name" id="name" class="form-control" 
-                                   placeholder="Enter service name" value="{{ old('name') }}" required>
-                        </div>
-                        @error('name')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <!-- Slug -->
-                    <div class="form-group full-width">
-                        <label for="slug" class="form-label">
-                            Slug
-                            <span class="optional">(Optional)</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-link"></i>
-                            <input type="text" name="slug" id="slug" class="form-control" 
-                                   placeholder="auto-generated if empty" value="{{ old('slug') }}">
-                        </div>
-                        <small class="helper-text">Leave blank to auto-generate from service name</small>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="form-group full-width">
-                        <label for="description" class="form-label">
-                            Description
-                            <span class="required">*</span>
-                        </label>
-                        <textarea name="description" id="description" class="form-control textarea-control" 
-                                  rows="4" placeholder="Enter service description..." required>{{ old('description') }}</textarea>
-                        <small class="helper-text">Provide a detailed description of the service</small>
-                        @error('description')
-                            <span class="error-message">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <!-- Price and Duration Row -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="price" class="form-label">
-                                Price (₹)
-                                <span class="required">*</span>
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-rupee-sign"></i>
-                                <input type="number" name="price" id="price" step="0.01" class="form-control" 
-                                       placeholder="0.00" value="{{ old('price') }}" required>
-                            </div>
-                            @error('price')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="duration" class="form-label">
-                                Duration (minutes)
-                                <span class="required">*</span>
-                            </label>
-                            <div class="input-wrapper">
-                                <i class="fas fa-clock"></i>
-                                <input type="number" name="duration" id="duration" class="form-control" 
-                                       placeholder="e.g. 45" value="{{ old('duration') }}" required>
-                            </div>
-                            @error('duration')
-                                <span class="error-message">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Media Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-image"></i> Media & Icon
-                    </h2>
-                    <p class="section-subtitle">Add visual elements to your service</p>
-                </div>
-
-                <div class="form-grid">
-                    <!-- Icon -->
-                    <div class="form-group full-width">
-                        <label for="icon" class="form-label">
-                            Icon
-                            <span class="optional">(Optional)</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-icons"></i>
-                            <input type="text" name="icon" id="icon" class="form-control" 
-                                   placeholder="e.g. fas fa-laptop" value="{{ old('icon') }}">
-                        </div>
-                        <small class="helper-text">
-                            Use <a href="https://fontawesome.com/icons" target="_blank" class="helper-link">Font Awesome icons</a> or Image URL
-                        </small>
-                    </div>
-
-                    <!-- Service Image -->
-                    <div class="form-group full-width">
-                        <label for="image" class="form-label">
-                            Service Image
-                            <span class="optional">(Optional)</span>
-                        </label>
-                        <div class="file-upload">
-                            <input type="file" name="image" id="image" class="file-input" accept="image/*">
-                            <div class="file-upload-content">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p class="file-upload-text">
-                                    Click to upload or drag and drop
-                                </p>
-                                <small>JPG, JPEG, PNG up to 2MB</small>
-                            </div>
-                        </div>
-                        <div id="imagePreview" class="image-preview" style="display: none;">
-                            <img id="previewImg" src="" alt="Preview">
-                            <button type="button" class="remove-image" onclick="removeImage()">&times;</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Settings Section -->
-            <div class="form-section">
-                <div class="section-header">
-                    <h2 class="section-title">
-                        <i class="fas fa-cog"></i> Settings
-                    </h2>
-                    <p class="section-subtitle">Configure service settings</p>
-                </div>
-
-                <div class="form-grid">
-                    <!-- Active Status Toggle -->
-                    <div class="toggle-group">
-                        <div class="toggle-content">
-                            <label class="toggle-label">Active Service</label>
-                            <p class="toggle-description">Enable this service to make it available for bookings</p>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" name="is_active" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Form Actions -->
-            <div class="form-actions">
-                <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Cancel
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Save Service
-                </button>
-            </div>
-        </form>
-    </div>
+        <!-- Buttons -->
+        <div class="form-actions">
+            <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Service
+            </button>
+        </div>
+    </form>
 </div>
+```
+
+</div>
+
+<!-- Minimal JS -->
+
+<script>
+    // Auto-generate slug
+    const nameInput = document.getElementById('name');
+    const slugInput = document.getElementById('slug');
+    if (nameInput && slugInput) {
+        nameInput.addEventListener('input', function() {
+            if (!slugInput.value.trim()) {
+                const slug = this.value.toLowerCase().trim()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w-]+/g, '');
+                slugInput.value = slug;
+            }
+        });
+    }
+</script>
 
 <style>
     :root {
@@ -839,71 +767,6 @@
     }
 </style>
 
-<script>
-    // Auto-generate slug from name
-    const nameInput = document.getElementById('name');
-    const slugInput = document.getElementById('slug');
 
-    if (nameInput && slugInput) {
-        nameInput.addEventListener('input', function() {
-            if (!slugInput.value) {
-                const slug = this.value
-                    .toLowerCase()
-                    .trim()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^\w-]+/g, '');
-                slugInput.value = slug;
-            }
-        });
-    }
-
-    // Image preview
-    const imageInput = document.getElementById('image');
-    const imagePreview = document.getElementById('imagePreview');
-    const previewImg = document.getElementById('previewImg');
-
-    if (imageInput) {
-        imageInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    // Remove image preview
-    function removeImage() {
-        imageInput.value = '';
-        imagePreview.style.display = 'none';
-        previewImg.src = '';
-    }
-
-    // Form validation
-    const form = document.querySelector('.service-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            const requiredInputs = form.querySelectorAll('[required]');
-            let isValid = true;
-
-            requiredInputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.classList.add('error');
-                } else {
-                    input.classList.remove('error');
-                }
-            });
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-    }
-</script>
 
 @endsection

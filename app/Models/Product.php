@@ -38,9 +38,13 @@ class Product extends Model
     }
 
     public function getFinalPriceAttribute()
-    {
-        return $this->discount_price ?? $this->price;
+{
+    if (!is_null($this->discount_price) && $this->discount_price > 0 && $this->discount_price < $this->price) {
+        return $this->discount_price;
     }
+    return $this->price;
+}
+
 
     public function getDiscountPercentageAttribute()
     {

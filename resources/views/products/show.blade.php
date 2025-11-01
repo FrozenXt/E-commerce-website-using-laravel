@@ -382,9 +382,9 @@
 
                 <div class="product-price-section">
                     <div class="price-display">
-                        <span class="current-price">${{ number_format($product->final_price, 2) }}</span>
+                        <span class="current-price">Rs {{ number_format($product->final_price, 2) }}</span>
                         @if($product->discount_price)
-                        <span class="old-price">${{ number_format($product->price, 2) }}</span>
+                        <span class="old-price">Rs {{ number_format($product->price, 2) }}</span>
                         <span class="discount-badge">Save {{ $product->discount_percentage }}%</span>
                         @endif
                     </div>

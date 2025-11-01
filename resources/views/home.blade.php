@@ -500,7 +500,7 @@
                 </div>
                 <h3>{{ $service->name }}</h3>
                 <p>{{ Str::limit($service->description, 100) }}</p>
-                <div class="service-price">${{ number_format($service->price, 2) }}</div>
+                <div class="service-price">Rs {{ number_format($service->price, 2) }}</div>
                 <a href="{{ route('booking.create') }}?service={{ $service->id }}" class="btn-service">Book Now</a>
             </div>
             @empty
@@ -539,9 +539,9 @@
                     <div class="product-category">{{ $product->category->name }}</div>
                     <h3>{{ $product->name }}</h3>
                     <div class="product-price">
-                        <span class="price-current">${{ number_format($product->final_price, 2) }}</span>
+                        <span class="price-current">Rs {{ number_format($product->final_price, 2) }}</span>
                         @if($product->discount_price)
-                        <span class="price-old">${{ number_format($product->price, 2) }}</span>
+                        <span class="price-old">Rs {{ number_format($product->price, 2) }}</span>
                         @endif
                     </div>
                     <a href="{{ route('products.show', $product->slug) }}" class="btn-view">View Details</a>

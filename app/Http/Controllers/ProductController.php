@@ -112,49 +112,44 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, Product $product)
-    {
-        $validated = $request->validate([
-            'name'           => 'required|string|max:255',
-            'slug'           => 'nullable|string|unique:products,slug,' . $product->id,
-            'category_id'    => 'nullable|exists:categories,id',
-            'description'    => 'nullable|string',
-            'price'          => 'required|numeric|min:0',
-            'discount_price' => 'nullable|numeric|min:0|lt:price',
-            'brand'          => 'nullable|string|max:100',
-            'stock'          => 'nullable|integer|min:0',
-            'is_featured'    => 'boolean',
-            'image'          => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'images.*'       => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+{
+    $validated = $request->validate([
+        'category_id'    => 'required|exists:categories,id',
+        'name'           => 'required|string|max:255',
+        'slug'           => 'nullable|string|max:255',
+        'description'    => 'nullable|string',
+        'price'          => 'required|numeric|min:0',
+        'discount_price' => 'nullable|numeric|min:0',
+        'brand'          => 'nullable|string|max:255',
+        'stock'          => 'nullable|integer|min:0',
+        'is_featured'    => 'nullable|boolean',
+        'is_active'      => 'nullable|boolean',
+        'image'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+    ]);
 
-        $validated['slug'] = $validated['slug'] ?? Str::slug($validated['name']);
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_active'] = true; // ✅ Keep active on update
-
-        if ($request->hasFile('image')) {
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $validated['image'] = $request->file('image')->store('products', 'public');
+    // ✅ Discount logic — prevent invalid discounts
+    if (!empty($validated['discount_price'])) {
+        if ($validated['discount_price'] >= $validated['price']) {
+            // Ignore discount if it's not actually lower
+            $validated['discount_price'] = null;
         }
-
-        if ($request->hasFile('images')) {
-            if ($product->images) {
-                foreach ($product->images as $oldImage) {
-                    if (Storage::disk('public')->exists($oldImage)) {
-                        Storage::disk('public')->delete($oldImage);
-                    }
-                }
-            }
-            $validated['images'] = collect($request->file('images'))
-                ->map(fn($file) => $file->store('products', 'public'))
-                ->toArray();
-        }
-
-        $product->update($validated);
-
-        return redirect()->route('admin.products.index')->with('success', '✅ Product updated successfully!');
+    } else {
+        $validated['discount_price'] = null;
     }
+
+    // ✅ Image upload handling (optional)
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('products', 'public');
+        $validated['image'] = $imagePath;
+    }
+
+    // ✅ Update the product
+    $product->update($validated);
+
+    return redirect()
+        ->route('admin.products.index')
+        ->with('success', 'Product updated successfully!');
+}
 
     public function destroy(Product $product)
     {
@@ -170,7 +165,8 @@ class ProductController extends Controller
             }
         }
 
-        $product->forceDelete(); // ✅ Ensure it’s truly deleted
+        $product->delete();
+// ✅ Ensure it’s truly deleted
 
         return redirect()->route('admin.products.index')->with('success', '🗑️ Product deleted successfully!');
     }
