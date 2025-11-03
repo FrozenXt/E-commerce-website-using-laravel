@@ -424,15 +424,52 @@
                 </ul>
 
                 <div class="action-buttons">
-                    <button class="btn-add-cart" onclick="alert('Shopping cart feature coming soon!')">
-                        <i class="fas fa-shopping-cart"></i>
-                        Add to Cart
-                    </button>
-                    <a href="{{ route('contact') }}" class="btn-contact">
-                        <i class="fas fa-envelope"></i>
-                        Inquire
-                    </a>
-                </div>
+    <form action="{{ route('cart.add', $product->id) }}" method="POST" id="addToCartForm">
+        @csrf
+        @if($product->stock > 0)
+        <button type="submit" class="btn-add-cart">
+            <i class="fas fa-shopping-cart"></i>
+            Add to Cart
+        </button>
+        @else
+        <button type="button" class="btn-add-cart" disabled style="opacity: 0.5; cursor: not-allowed;">
+            <i class="fas fa-times-circle"></i>
+            Out of Stock
+        </button>
+        @endif
+    </form>
+    <a href="{{ route('contact') }}" class="btn-contact">
+        <i class="fas fa-envelope"></i>
+        Inquire
+    </a>
+</div>
+
+<script>
+    document.getElementById('addToCartForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                alert('Product added to cart successfully!');
+                // Redirect to cart
+                window.location.href = '/cart';
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+
+
 
                 <div class="features-grid">
                     <div class="feature-item">
@@ -482,7 +519,7 @@
                 </div>
                 <div class="related-info">
                     <h3>{{ $related->name }}</h3>
-                    <div class="related-price">${{ number_format($related->final_price, 2) }}</div>
+                    <div class="related-price">Rs {{ number_format($related->final_price, 2) }}</div>
                     <a href="{{ route('products.show', $related->slug) }}" class="btn-view">View Details</a>
                 </div>
             </div>

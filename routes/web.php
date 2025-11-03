@@ -9,7 +9,8 @@ use App\Http\Controllers\{
     ContactController,
     AboutController,
     AdminController,
-    CategoryController
+    CategoryController,
+    CartController
 };
 
 
@@ -21,6 +22,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Products / Shop
 Route::get('/shop', [ProductController::class, 'index'])->name('products.index');
 Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('products.show');
+
 
 // Services
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
@@ -43,6 +45,13 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 // --------------------
 Route::get('admin/login', [AdminController::class, 'showLogin'])->name('admin.login');
 Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 
 // --------------------
 // Admin Routes (Protected)

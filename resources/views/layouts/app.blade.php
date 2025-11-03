@@ -408,6 +408,7 @@
                         <span>info@smarttechnohub.com</span>
                     </a>
                 </div>
+                
                 <div class="top-bar-right">
                     <span class="top-bar-item">
                         <i class="fas fa-clock"></i>
@@ -437,7 +438,21 @@
                 <li><a href="{{ route('services.index') }}" class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}">Services</a></li>
                 <li><a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">About</a></li>
                 <li><a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a></li>
-                <li><a href="{{ route('booking.create') }}" class="btn-primary">Book Repair</a></li>
+                <li>
+        <a href="{{ route('cart.index') }}" class="nav-cart {{ request()->routeIs('cart.*') ? 'active' : '' }}">
+            <i class="fas fa-shopping-cart"></i>
+            @php
+                $cartCount = count(Session::get('cart', []));
+            @endphp
+            @if($cartCount > 0)
+            <span class="cart-badge">{{ $cartCount }}</span>
+            @endif
+        </a>
+    </li>
+    
+    <li><a href="{{ route('booking.create') }}" class="btn-primary">Book Repair</a></li>
+</ul>
+                
             </ul>
         </nav>
     </header>

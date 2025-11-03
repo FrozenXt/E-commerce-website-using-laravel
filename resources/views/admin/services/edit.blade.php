@@ -17,6 +17,12 @@
                 <input type="text" name="name" class="form-control" value="{{ $service->name }}" required>
             </div>
 
+              <div class="form-group mb-3">
+                <label>Price</label>
+                <input type="number" name="price" class="form-control" value="{{ $service->price }}" required>
+            </div>
+
+
             <div class="form-group mb-3">
                 <label>Description</label>
                 <textarea name="description" class="form-control">{{ $service->description }}</textarea>
