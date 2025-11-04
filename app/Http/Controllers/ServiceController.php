@@ -46,24 +46,24 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255|unique:services,name',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'icon' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:4096',
+            //'icon' => 'required|image|mimes:png,jpg,jpeg,svg|max:2048',
+            //'image' => 'nullable|image|mimes:png,jpg,jpeg|max:4096',
             'duration' => 'required|integer|min:1',
             'is_active' => 'nullable|boolean',
         ]);
 
-        $iconPath = $request->file('icon')->store('services/icons', 'public');
+        /* $iconPath = $request->file('icon')->store('services/icons', 'public');
         $imagePath = $request->hasFile('image') 
             ? $request->file('image')->store('services/images', 'public')
-            : null;
+            : null; */
 
         Service::create([
             'name' => $validated['name'],
             'slug' => Str::slug($validated['name']),
             'description' => $validated['description'],
             'price' => $validated['price'],
-            'icon' => $iconPath,
-            'image' => $imagePath,
+            //'icon' => $iconPath,
+            //'image' => $imagePath,
             'duration' => $validated['duration'],
             'is_active' => $request->has('is_active'),
         ]);
@@ -88,8 +88,8 @@ class ServiceController extends Controller
             'name' => 'required|string|max:255|unique:services,name,' . $service->id,
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'icon' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
-            'image' => 'nullable|image|mimes:png,jpg,jpeg|max:4096',
+            //'icon' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
+            //'image' => 'nullable|image|mimes:png,jpg,jpeg|max:4096',
             'duration' => 'required|integer|min:1',
             'is_active' => 'nullable|boolean',
         ]);
@@ -107,7 +107,8 @@ class ServiceController extends Controller
         }
 
         $validated['slug'] = Str::slug($validated['name']);
-        $validated['is_active'] = $request->has('is_active');
+        $validated['is_active'] = $request->input('is_active', 0);
+
 
         $service->update($validated);
 

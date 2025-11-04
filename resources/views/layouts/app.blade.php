@@ -401,18 +401,18 @@
                 <div class="top-bar-left">
                     <a href="tel:+15551234567" class="top-bar-item">
                         <i class="fas fa-phone"></i>
-                        <span>+1 (555) 123-4567</span>
+                        <span>+977 9869415250</span>
                     </a>
                     <a href="mailto:info@smarttechnohub.com" class="top-bar-item">
                         <i class="fas fa-envelope"></i>
-                        <span>info@smarttechnohub.com</span>
+                        <span>smarttechnohub@gmai.com</span>
                     </a>
                 </div>
                 
                 <div class="top-bar-right">
                     <span class="top-bar-item">
                         <i class="fas fa-clock"></i>
-                        <span>Mon-Sat: 9AM-8PM</span>
+                        <span>Sun-Sat: 7AM-10PM</span>
                     </span>
                 </div>
             </div>
@@ -502,10 +502,10 @@
                 <div class="footer-section">
                     <h3>Contact Info</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Street, Digital City</li>
-                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-envelope"></i> info@smarttechnohub.com</li>
-                        <li><i class="fas fa-clock"></i> Mon-Sat: 9AM-8PM</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Jorpati Oralo,Kathmandu,Gokarneshwor-5</li>
+                        <li><i class="fas fa-phone"></i> +9779869415250</li>
+                        <li><i class="fas fa-envelope"></i> smarttechnohub@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Sun-Sat: 7AM-10PM</li>
                     </ul>
                 </div>
             </div>

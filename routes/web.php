@@ -99,4 +99,7 @@ Route::prefix('admin')->middleware([\App\Http\Middleware\AdminAuth::class])->gro
 
     // ✅ Admin Contacts
     Route::get('contacts', [ContactController::class, 'adminIndex'])->name('admin.contacts.index');
+    Route::get('/contacts/{id}', [ContactController::class, 'show'])->name('admin.contacts.show');
+    Route::delete('contacts/{id}', [ContactController::class, 'destroy'])->name('admin.contacts.destroy');
+
 });

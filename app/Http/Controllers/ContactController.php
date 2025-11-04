@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    
     public function index()
     {
         return view('contact');
@@ -32,6 +33,20 @@ class ContactController extends Controller
     $contacts = Contact::latest()->get();
     return view('admin.contacts.index', compact('contacts'));
 }
+public function show()
+{
+    $contacts = Contact::latest()->get();
+    return view('admin.contacts.index', compact('contacts'));
+}
 
+public function destroy($id)
+{
+    $contact = Contact::findOrFail($id);
+    $contact->delete();
+
+    return redirect()->route('admin.contacts.index')
+        ->with('success', 'Contact message deleted successfully.');
+
+}
 }
 

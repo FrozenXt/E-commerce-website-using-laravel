@@ -21,6 +21,11 @@
                 <label>Price</label>
                 <input type="number" name="price" class="form-control" value="{{ $service->price }}" required>
             </div>
+            <div class="form-group mb-3">
+    <label>Duration (minutes)</label>
+    <input type="number" name="duration" class="form-control" value="{{ $service->duration }}" required>
+</div>
+
 
 
             <div class="form-group mb-3">

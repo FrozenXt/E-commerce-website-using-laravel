@@ -217,12 +217,12 @@
     <div class="contact-card">
         <i class="fas fa-phone-alt"></i>
         <h4>Phone</h4>
-        <p>+977 9801-234-567</p>
+        <p>+977 9869415250</p>
     </div>
     <div class="contact-card">
         <i class="fas fa-envelope"></i>
         <h4>Email</h4>
-        <p>info@smarttechnohub.com</p>
+        <p>smarttechnohub@gmail.com</p>
     </div>
 </section>
 
