@@ -291,7 +291,7 @@
                 </div>
             </div>
             <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1581091870629-1fc6cf2ed06c?fit=crop&w=800&q=80" alt="About Smart Techno Hub">
+                <img src="{{ asset('images/subasdai.jpg') }}" alt="About Smart Techno Hub">
             </div>
         </div>
     </section>
@@ -338,19 +338,19 @@
         </div>
         <div class="team-grid">
             <div class="team-member">
-                <img src="https://images.unsplash.com/photo-1603415526960-f9e5f8c6b7e0?fit=crop&w=400&q=80" alt="Team Member">
-                <h5>John Doe</h5>
-                <span>Lead Technician</span>
+                <img src="{{ asset('images/subasdai.jpg') }}" alt="Team Member">
+                <h5>Subas Lamsal</h5>
+                <span>Lead Technician and Owner</span>
             </div>
             <div class="team-member">
-                <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?fit=crop&w=400&q=80" alt="Team Member">
-                <h5>Jane Smith</h5>
-                <span>Customer Support</span>
+                <img src="{{ asset('images/santosh.jpg') }}" alt="Team Member">
+                <h5>Santosh Lamichhane</h5>
+                <span>Technician</span>
             </div>
             <div class="team-member">
                 <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a3?fit=crop&w=400&q=80" alt="Team Member">
-                <h5>Michael Brown</h5>
-                <span>Software Specialist</span>
+                <h5>Rajesh Hamal</h5>
+                <span>Junior Assistant</span>
             </div>
         </div>
     </section>

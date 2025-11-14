@@ -181,7 +181,7 @@
 
   <div class="login-wrapper">
     <div class="brand-section">
-      <img src="logo.jpg" alt="Smart Techno Hub Logo">
+      <img src="{{ asset('images/logo1.jpeg') }}" alt="Smart Techno Hub Logo">
       <h1>Smart Techno Hub</h1>
       <p>Your trusted partner for mobile repair and sales. Log in to manage your services and customers.</p>
     </div>
